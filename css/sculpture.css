@@ -1,0 +1,44 @@
+.sculpture-viewport,.sculpture-ui{display:none}
+.hero-art.has-webgl{height:580px;perspective:none}
+.scroll-stage .hero-art.has-webgl{height:min(580px,70vh)}
+.has-webgl .sculpture-stage,.has-webgl .rotate-art,.has-webgl .art-caption{visibility:hidden!important;pointer-events:none}
+.has-webgl .orbit-one{display:none}
+.has-webgl .orbit-two{inset:50px 0 100px;opacity:.5;pointer-events:none}
+.has-webgl .sculpture-viewport{display:block;position:absolute;inset:-35px -36px 85px;cursor:grab;touch-action:pan-y;outline-offset:-30px}
+.has-webgl .sculpture-viewport.is-dragging{cursor:grabbing}
+.sculpture-canvas{width:100%;height:100%;display:block}
+.has-webgl .sculpture-ui{display:flex;position:absolute;bottom:0;left:-20px;right:-20px;flex-direction:column;align-items:center;gap:12px;color:var(--muted);z-index:3}
+.sculpture-ui p{margin:0;font-size:14px;text-align:center}
+.sculpture-ui p>span{display:inline-block;margin-right:8px;font-size:20px;vertical-align:middle}
+.sculpture-controls{display:flex;align-items:center;gap:8px;padding:6px;background:#f8f7fb9c;border:1px solid #c4b8d4;border-radius:32px;backdrop-filter:blur(12px)}
+.sculpture-controls button{font-size:14px;border:0;min-height:40px;display:flex;align-items:center;justify-content:center;gap:7px;padding:8px 12px;border-radius:24px;background:transparent;color:var(--ink);white-space:nowrap}
+.finish-picker{display:flex;gap:2px}
+.finish-picker button[aria-pressed=true]{background:var(--surface);box-shadow:0 2px 8px #30254512}
+.sculpture-controls .layers-toggle{border:1px solid #c4b8d4}
+.sculpture-controls .layers-toggle[aria-pressed=true]{background:var(--primary);color:white;border-color:var(--primary)}
+.sculpture-controls .reset-sculpture{font-size:24px;line-height:1;width:40px;padding:0}
+.sculpture-controls button:hover{background:#ded3ee}
+.finish-dot{width:12px;height:12px;border-radius:50%;box-shadow:inset 1px 1px 2px #fff;border:1px solid #8b7d9b}
+.finish-dot.pearl{background:linear-gradient(140deg,#f2e9ff,#a38cc9)}
+.finish-dot.titanium{background:linear-gradient(140deg,#f3f3f6,#647083)}
+.hero.is-scene-dark .sculpture-ui{color:#ddd1ed}
+.hero.is-scene-dark .sculpture-controls{background:#483858a8;border-color:#877499}
+.hero.is-scene-dark .sculpture-controls button{color:#f8f7fb}
+.hero.is-scene-dark .finish-picker button[aria-pressed=true]{background:#645275}
+.hero.is-scene-dark .sculpture-controls button:hover{background:#645275}
+.hero.is-scene-dark .sculpture-controls .layers-toggle{border-color:#877499}
+.hero.is-scene-dark .sculpture-controls :focus-visible{outline-color:#e7dcf8}
+.hero.is-scene-dark .sculpture-viewport:focus-visible{outline-color:#e7dcf8}
+.frame-tilt{width:100%;height:100%;min-width:0;display:flex;align-items:center;justify-content:center;transform:rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.work-visual:hover .frame-tilt{will-change:transform}
+.project-peek{position:absolute;right:16px;bottom:16px;width:48px;height:48px;display:grid;place-items:center;background:#f8f7fb;color:var(--dark);border-radius:50%;font-size:24px;transform:rotate(-12deg);transition:transform .3s,background .3s;box-shadow:0 4px 24px #30254512}
+.work-visual:hover .project-peek,.work-visual:focus-visible .project-peek{transform:rotate(0deg) scale(1.08);background:#fff}
+.gallery-hint{font-size:14px;color:#d1c9de;margin:0}
+.scroll-gallery .gallery-window{cursor:grab}
+.scroll-gallery.is-dragging .gallery-window,.scroll-gallery.is-dragging .gallery-window a{cursor:grabbing;user-select:none}
+.scroll-gallery.is-dragging .frame-tilt{transform:none}
+@media(max-width:1100px){.gallery-hint{display:none}.sculpture-controls{gap:4px}.sculpture-controls button{padding:8px 10px}}
+@media(max-width:900px){.hero-art.has-webgl{height:490px}.has-webgl .sculpture-viewport{inset:-20px -15px 100px}.has-webgl .sculpture-ui{left:0;right:0}.sculpture-controls{flex-wrap:wrap;justify-content:center;border-radius:24px}.has-webgl .orbit-two{inset:30px 0 110px}}
+@media(max-width:700px){.hero-art.has-webgl{height:445px;margin-top:28px}.has-webgl .sculpture-viewport{inset:-30px -15px 100px}.has-webgl .sculpture-ui{gap:10px}.sculpture-ui p{max-width:300px}.sculpture-controls{gap:2px;padding:4px}.sculpture-controls button{font-size:14px;min-height:40px;padding:7px 8px}.sculpture-controls .reset-sculpture{width:34px}.finish-picker{gap:0}.finish-dot{width:10px;height:10px}.has-webgl .orbit-two{inset:20px 0 125px}.visual-caption{max-width:calc(100% - 84px)}}
+@media(max-width:370px){.hero-art.has-webgl{height:460px}.has-webgl .sculpture-viewport{bottom:130px}.sculpture-controls{max-width:280px}.finish-picker{width:100%;justify-content:center}}
+@media(prefers-reduced-motion:reduce){.frame-tilt{transform:none!important}.project-peek{transform:none!important}}

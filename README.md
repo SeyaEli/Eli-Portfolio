@@ -1,0 +1,45 @@
+# John Eliseo Portfolio
+
+A standalone static portfolio with five main pages and eight project case studies, located at `C:\xampp\htdocs\JohnEliseoPortfolio`.
+
+## Scroll experience
+
+The home page uses locally bundled GSAP and ScrollTrigger. On desktop viewports at least 901px wide and 720px tall, the hero pins while its sculpture separates into layers and its copy transitions. The selected-work gallery then pins and translates horizontally in response to native vertical scrolling. Its project buttons, keyboard focus, and skip links provide direct navigation. Mobile and shorter screens use a vertical gallery with subtle parallax. Reduced-motion and JavaScript-disabled visitors get the complete static page without pinned sections.
+
+The Three.js E has beveled geometry, a generated studio environment, pearl/titanium finishes, drag and arrow-key rotation, layer separation, and reset controls. Rendering pauses offscreen and after movement settles. Graphics failures reveal the CSS sculpture. Gallery screenshots retain their intrinsic proportions, and the space between projects is larger than the gap inside each text-and-image pair.
+
+The home and services pages share an interactive service explorer. Its accessible tabs switch between responsive-layout, request-routing, API round-trip, and deployment illustrations. Each includes deliverables and a related case study. These demos run entirely in the browser; they do not submit requests or deploy software. All service descriptions remain visible without JavaScript.
+
+## Preview
+
+From `C:\xampp\htdocs\JohnEliseoPortfolio`:
+
+```sh
+npm install
+npm run dev
+```
+
+Open http://127.0.0.1:5177/. With Apache running, the folder also works at http://localhost/JohnEliseoPortfolio/.
+
+## Editing and deployment
+
+- Edit page content in `build.mjs`, the home composition in `home-content.mjs`, services in `services-content.mjs`, and project content in `projects-data.js`.
+- Run `npm ci` to install the project's own dependencies from its lockfile.
+- Run `npm run build` to regenerate all HTML pages and the bundled 3D sculpture.
+- Styles live in `css/main.css`, `css/scroll.css`, `css/sculpture.css`, and `css/services.css`; interactions live in `js/main.js`, `js/scroll.js`, `js/services.js`, and `js/sculpture.js`. The build bundles and minifies the Three.js scene into `js/sculpture.bundle.js`.
+- Deploy the generated HTML, all four CSS files, `js/main.js`, `js/scroll.js`, `js/services.js`, `js/sculpture.bundle.js`, its `.LEGAL.txt` file, `js/vendor/`, and `assets/` to any static host. The generated site needs no server-side runtime. The legacy `animations.js`, `hero3d.js`, and `variables.css` are not loaded.
+- GSAP 3.15.0 is pinned in `package-lock.json`; bundled distribution files retain their original license headers. To update, install the desired version here and copy `node_modules/gsap/dist/gsap.min.js` and `node_modules/gsap/dist/ScrollTrigger.min.js` to `js/vendor/`.
+- The contact form opens a mailto draft; it does not transmit or store submissions. Email delivery requires the visitor to send the draft from an email app.
+- Google Fonts supplies Manrope, with Arial and system sans-serif fallbacks.
+
+## Content sources
+
+Biography, education, contact details, skills, project capabilities, screenshots, and résumé were taken from the supplied old portfolio source. Case-study narratives summarize documented capabilities; no client testimonials, revenue, usage metrics, or project dates were invented. RealEstate Chain retains its source status as ongoing. Review project status and the résumé before publishing.
+
+## Verification
+
+`npm run verify` runs a temporary local server and Playwright against installed Microsoft Edge. It checks all 13 pages, local links, images, desktop/mobile overflow, filters, service navigation, mobile navigation and Escape, email validation/copy, the sculpture control, text sizing, and JavaScript errors. It also runs `verify-motion.mjs`: wheel-driven animation, forward/reverse scrolling, gallery controls, keyboard case-study access, skip links, resizing during a pin, laptop/mobile layouts, live reduced-motion changes, and a no-JavaScript fallback. Screenshots go to `test-results/screenshots/`. The script closes its server/browser afterward.
+
+The motion checks also verify project separation, uncropped screenshot proportions, and frame/caption clearance. `verify-sculpture.mjs` checks actual rendered changes for finishes, layer separation, pointer/keyboard rotation, gallery dragging, mobile controls, reduced-motion stillness, and WebGL context failure and recovery.
+
+`verify-services.mjs` checks tab keyboard/focus behavior, every demo flow, cancellation on service changes, reduced motion, project links, 320px/mobile layouts, and the no-JavaScript fallback on both service explorer routes.

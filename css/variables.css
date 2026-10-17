@@ -1,0 +1,66 @@
+/* ============================================================
+   DESIGN TOKENS — John Eliseo Cea Portfolio
+   ============================================================ */
+
+:root {
+  /* Colors */
+  --color-bg:          #0C0C0E;
+  --color-surface:     #141416;
+  --color-surface-2:   #1A1A1E;
+  --color-border:      #242428;
+  --color-border-soft: #1C1C20;
+
+  --color-text:        #F0EEE9;
+  --color-text-muted:  #888884;
+  --color-text-faint:  #444440;
+
+  --color-accent:      #C8A96E;
+  --color-accent-dim:  rgba(200, 169, 110, 0.12);
+  --color-accent-glow: rgba(200, 169, 110, 0.06);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'Inter', system-ui, -apple-system, sans-serif;
+
+  --size-xs:   11px;
+  --size-sm:   13px;
+  --size-base: 15px;
+  --size-md:   17px;
+  --size-lg:   22px;
+  --size-xl:   32px;
+  --size-2xl:  48px;
+  --size-3xl:  72px;
+  --size-4xl:  96px;
+  --size-hero: clamp(56px, 9vw, 120px);
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* Layout */
+  --max-width: 1280px;
+  --gutter:    clamp(24px, 5vw, 80px);
+
+  /* Motion */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast:   200ms;
+  --duration-base:   400ms;
+  --duration-slow:   700ms;
+  --duration-xslow: 1200ms;
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
