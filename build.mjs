@@ -1,10 +1,11 @@
-import {writeFile} from 'node:fs/promises';
+import {writeFile,mkdir,cp,rm,lstat} from 'node:fs/promises';
 import {projects} from './projects-data.js';
 import {home} from './home-content.mjs';
 import {serviceShowcase} from './services-content.mjs';
 import {build} from 'esbuild';
 import {fileURLToPath} from 'node:url';
 import {readFileSync} from 'node:fs';
+import {resolve,dirname} from 'node:path';
 await build({entryPoints:[fileURLToPath(new URL('js/sculpture.js',import.meta.url))],bundle:true,minify:true,format:'esm',target:'es2022',outfile:fileURLToPath(new URL('js/sculpture.bundle.js',import.meta.url)),legalComments:'linked'});
 const arrow='<span aria-hidden="true">↗</span>';
 const tags=p=>p.stack.map(t=>`<span>${t}</span>`).join('');
@@ -28,5 +29,21 @@ for(const p of projects) pages[`project-${p.id}`]=layout(p.name,`<section class=
 for(const [name,html] of Object.entries(pages)) await writeFile(new URL(`${name}.html`,import.meta.url),html);
 await writeFile(new URL('project-aksyon.html',import.meta.url),'<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=project-ecitizen.html"><link rel="canonical" href="project-ecitizen.html"><title>eCitizen — John Eliseo Cea</title></head><body><p>This project is now <a href="project-ecitizen.html">eCitizen</a>.</p></body></html>');
 await writeFile(new URL('project-servicedesk.html',import.meta.url),'<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=project-darts.html"><link rel="canonical" href="project-darts.html"><title>DARTS — John Eliseo Cea</title></head><body><p>This project is now <a href="project-darts.html">DARTS</a>.</p></body></html>');
-console.log(`Generated ${Object.keys(pages).length} portfolio pages.`);
+const projectRoot=resolve(fileURLToPath(new URL('.',import.meta.url)));
+const outputDirectory=resolve(projectRoot,'dist');
+if(dirname(outputDirectory)!==projectRoot)throw new Error('Build output must stay inside the portfolio project.');
+const previousOutput=await lstat(outputDirectory).catch(error=>{if(error.code!=='ENOENT')throw error;return null});
+if(previousOutput?.isSymbolicLink())throw new Error('Refusing to replace a linked output directory.');
+await rm(outputDirectory,{recursive:true,force:true});
+await mkdir(resolve(outputDirectory,'js'),{recursive:true});
+for(const name of [...Object.keys(pages),'project-aksyon','project-servicedesk']){
+  await cp(resolve(projectRoot,`${name}.html`),resolve(outputDirectory,`${name}.html`));
+}
+for(const directory of ['assets','css','js/vendor']){
+  await cp(resolve(projectRoot,directory),resolve(outputDirectory,directory),{recursive:true});
+}
+for(const script of ['main.js','services.js','scroll.js','sculpture.bundle.js','sculpture.bundle.js.LEGAL.txt']){
+  await cp(resolve(projectRoot,'js',script),resolve(outputDirectory,'js',script));
+}
+console.log(`Generated ${Object.keys(pages).length} portfolio pages and packaged the deployable site in dist/.`);
 
