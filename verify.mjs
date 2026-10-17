@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import {verifyMotion} from './verify-motion.mjs';
 import {verifySculpture} from './verify-sculpture.mjs';
 import {verifyServices} from './verify-services.mjs';
+import {verifyIntro} from './verify-intro.mjs';
 const projectRoot=resolve(fileURLToPath(new URL('.',import.meta.url)));
 const root=process.argv.includes('--dist')?resolve(projectRoot,'dist'):projectRoot;
 process.chdir(projectRoot);
@@ -15,11 +16,17 @@ const server=createServer(async(req,res)=>{try{let path=resolve(root,'.'+decodeU
 await new Promise(r=>server.listen(5176,'127.0.0.1',r));
 const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
- if(process.argv.includes('--services-only')){
+ if(process.argv.includes('--laptop-only')){
+   await verifyIntro(browser,'http://127.0.0.1:5176/');
+   await verifySculpture(browser,'http://127.0.0.1:5176/');
+ }else if(process.argv.includes('--intro-only')){
+   await verifyIntro(browser,'http://127.0.0.1:5176/');
+ }else if(process.argv.includes('--services-only')){
    await verifyServices(browser,'http://127.0.0.1:5176/');
  }else{
+ await verifyIntro(browser,'http://127.0.0.1:5176/');
  const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
- const base='http://127.0.0.1:5176/';await page.goto(base);await page.screenshot({path:'test-results/screenshots/desktop-preview.png',fullPage:true});
+ const base='http://127.0.0.1:5176/';await page.goto(base);await expect(page.locator('.entry-intro')).toBeHidden({timeout:8500});await page.screenshot({path:'test-results/screenshots/desktop-preview.png',fullPage:true});
  await expect(page.locator('.hero-art')).toHaveAttribute('data-sculpture-state',/ready|fallback/);
  const urls=new Set(['index.html','projects.html','services.html','about.html','contact.html']);
  await page.goto(base+'projects.html');for(const href of await page.locator('.project').evaluateAll(a=>a.map(x=>x.getAttribute('href'))))urls.add(href);

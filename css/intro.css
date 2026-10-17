@@ -1,0 +1,36 @@
+/* A typographic welcome, followed by a gradual homepage reveal. */
+html{scrollbar-gutter:stable}
+.entry-intro{display:none}
+.intro-active{overflow:hidden!important}
+.intro-active .entry-intro{display:flex;position:fixed;inset:0;z-index:10000;flex-direction:column;justify-content:space-between;padding:32px var(--space);background:transparent;color:var(--ink);isolation:isolate;overflow:hidden}
+.entry-intro::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--background)}
+.entry-top,.entry-bottom{display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:14px;line-height:1.5;position:relative;z-index:2}
+.entry-top>span{font-weight:600}
+.entry-skip{display:inline-flex;align-items:center;gap:28px;min-height:44px;background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;padding:8px 0 8px 16px}
+.entry-skip:hover{color:var(--primary)}
+.entry-skip:focus-visible,.replay-intro:focus-visible{outline:2px solid var(--primary);outline-offset:6px;border-radius:4px}
+.entry-center{text-align:center;position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;padding:100px 24px}
+.entry-center h2{font-size:clamp(64px,8vw,124px);font-weight:500;line-height:1.03;letter-spacing:-.075em;margin:0;display:flex;gap:.24em;overflow:hidden;padding:0 .1em .12em}
+.entry-center h2 span{display:block}
+.entry-description{font-size:clamp(14px,1.2vw,17px);line-height:1.6;color:var(--muted);margin:16px 0 0}
+.entry-bottom{color:var(--muted)}
+.entry-line{position:absolute;bottom:0;left:0;right:0;height:2px;overflow:hidden;background:var(--line)}
+.entry-line span{display:block;width:100%;height:100%;background:var(--primary);transform:scaleX(0);transform-origin:left}
+.entry-intro.is-playing h2 span{animation:entry-type 1.6s cubic-bezier(.22,1,.36,1) .75s both}
+.entry-intro.is-playing h2 span+span{animation-delay:1s}
+.entry-intro.is-playing .entry-description{animation:entry-caption 1.25s ease 1.65s both}
+.entry-intro.is-playing .entry-line span{animation:entry-line 4.1s cubic-bezier(.4,0,.2,1) forwards}
+.entry-intro.is-leaving::before{animation:entry-dissolve 1.45s cubic-bezier(.45,0,.2,1) .45s forwards;will-change:opacity}
+.entry-intro.is-leaving .entry-center{animation:entry-content-exit .85s cubic-bezier(.4,0,.2,1) forwards;will-change:transform,opacity}
+.entry-intro.is-leaving .entry-top,.entry-intro.is-leaving .entry-bottom,.entry-intro.is-leaving .entry-line{animation:entry-dissolve .85s ease forwards}
+.replay-intro{display:none;background:transparent;border:0;border-bottom:1px solid var(--line);padding:4px 0;font:inherit;color:inherit;cursor:pointer}
+.intro-available .replay-intro{display:inline-block}
+.hero-bottom{flex-wrap:wrap;gap:12px 24px}
+@keyframes entry-type{from{opacity:0;transform:translate3d(0,110%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes entry-caption{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes entry-line{to{transform:scaleX(1)}}
+@keyframes entry-dissolve{to{opacity:0}}
+@keyframes entry-content-exit{to{opacity:0;transform:translate3d(0,-28px,0) scale(.975)}}
+@media(max-width:600px){.intro-active .entry-intro{padding:20px 24px}.entry-center h2{flex-direction:column;gap:0;font-size:clamp(64px,17vw,96px)}.entry-description{max-width:230px}.entry-bottom{align-items:flex-end;gap:16px}.entry-bottom>span:last-child{text-align:right;max-width:110px}.hero-bottom .replay-intro{order:3}}
+@media(max-height:550px){.entry-center h2{font-size:60px;flex-direction:row}.entry-description{margin-top:8px}.entry-center{padding:68px 20px}}
+@media(prefers-reduced-motion:reduce){.intro-active .entry-intro{display:none!important}.intro-active{overflow:visible!important}.replay-intro{display:none!important}}

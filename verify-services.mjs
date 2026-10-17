@@ -6,6 +6,7 @@ export async function verifyServices(browser,base){
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   for(const route of ['','services.html']){
     await page.goto(base+route);
+    await expect(page.locator('.entry-intro')).toBeHidden({timeout:8500});
     const explorer=page.locator('.service-explorer');
     await expect(explorer).toHaveClass(/is-enhanced/);
     await expect(explorer.getByRole('tab')).toHaveCount(4);

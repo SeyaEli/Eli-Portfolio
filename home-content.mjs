@@ -1,3 +1,4 @@
+import {assembly} from './assembly-content.mjs';
 import {projects} from './projects-data.js';
 import {readFileSync} from 'node:fs';
 
@@ -16,16 +17,34 @@ export const home = services => `
       <div class="hero-intro"><span class="asterisk" aria-hidden="true">✳</span><p>A full stack developer connecting thoughtful interfaces with the systems that make them work.</p></div>
       <a class="button" href="projects.html">Explore my work <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="hero-art" aria-label="Interactive geometric letter E">
-      <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-      <div class="sculpture-stage"><div class="sculpture" aria-hidden="true"><div class="beam beam-one"></div><div class="beam beam-two"></div><div class="beam beam-three"></div><div class="spine"></div></div></div>
-      <div class="sculpture-viewport" role="group" aria-label="Interactive 3D E" aria-describedby="sculpture-help" tabindex="0"><canvas class="sculpture-canvas" aria-hidden="true"></canvas></div>
-      <div class="sculpture-ui"><p id="sculpture-help"><span aria-hidden="true">↔</span> Drag to rotate. Arrow keys work, too.</p><div class="sculpture-controls"><div class="finish-picker" role="group" aria-label="Sculpture finish"><button type="button" data-finish="pearl" aria-pressed="true"><span class="finish-dot pearl"></span>Pearl</button><button type="button" data-finish="titanium" aria-pressed="false"><span class="finish-dot titanium"></span>Titanium</button></div><button class="layers-toggle" type="button" aria-pressed="false">Separate layers</button><button class="reset-sculpture" type="button" aria-label="Reset sculpture view">↺</button></div><span class="sr-only sculpture-status" role="status"></span></div>
-      <span class="art-caption">Ideas, taking shape.</span><button class="rotate-art" aria-label="Rotate geometric sculpture">Rotate ↻</button>
+    <div class="hero-art photo-art" aria-label="Interactive photographs of my ROG Strix laptop">
+      <div class="laptop-photo-stage" role="group" aria-label="ROG Strix assembled and exploded views" aria-describedby="photo-help">
+        <img class="laptop-assembled" src="assets/images/laptop/rog-assembled-cutout.png" alt="ROG Strix laptop viewed from behind, with its lid open and RGB lighting" width="500" height="500" fetchpriority="high">
+        <div class="exploded-scene">
+          ${assembly}
+          <div class="photo-hotspots" role="group" aria-label="Select a component in the exploded photograph" inert>
+            <button type="button" data-part="display" class="hotspot hotspot-display" aria-label="Explore display layer"><span>Display</span></button>
+            <button type="button" data-part="keyboard" class="hotspot hotspot-keyboard" aria-label="Explore keyboard layer"><span>Keyboard</span></button>
+            <button type="button" data-part="cooling" class="hotspot hotspot-cooling" aria-label="Explore cooling layer"><span>Cooling</span></button>
+            <button type="button" data-part="battery" class="hotspot hotspot-battery" aria-label="Explore battery layer"><span>Battery</span></button>
+            <button type="button" data-part="motherboard" class="hotspot hotspot-motherboard" aria-label="Explore motherboard layer"><span>Motherboard</span></button>
+            <button type="button" data-part="chassis" class="hotspot hotspot-chassis" aria-label="Explore chassis layer"><span>Chassis</span></button>
+          </div>
+        </div>
+        <span class="photo-state" aria-hidden="true">Assembled</span>
+      </div>
+      <noscript><p><a class="text-link" href="assets/images/laptop/rog-exploded.png">View the exploded laptop photograph ↗</a></p></noscript>
+      <div class="photo-controls">
+        <p id="photo-help">ROG Strix G16 · Explore my everyday coding setup.</p>
+        <div class="photo-view-controls"><button class="layers-toggle" type="button" aria-pressed="false">Separate layers <span aria-hidden="true">↗</span></button><button class="reset-photo" type="button" aria-label="Reset laptop view">↺</button></div>
+        <label class="separation-control"><span>Assembled</span><input type="range" min="0" max="100" value="0" aria-label="Laptop exploded view" aria-valuetext="Assembled"><span>Exploded</span></label>
+        <div class="part-picker" role="group" aria-label="Explore laptop layers"><button type="button" data-part="display" aria-pressed="false">Display</button><button type="button" data-part="keyboard" aria-pressed="false">Keyboard</button><button type="button" data-part="cooling" aria-pressed="false">Cooling</button><button type="button" data-part="motherboard" aria-pressed="false">Motherboard</button><button type="button" data-part="battery" aria-pressed="false">Battery</button><button type="button" data-part="chassis" aria-pressed="false">Chassis</button></div>
+        <div class="part-detail" aria-live="polite" aria-atomic="true"><strong class="part-title">My everyday coding companion.</strong><p class="part-description">My tool for writing code, testing ideas, and bringing projects to life.</p></div>
+      </div>
     </div>
-    <div class="hero-story"><p>Every layer, connected.</p><h2>From interface<br>to infrastructure.</h2><p>Clear on the surface.<br>Considered all the way through.</p></div>
+    <div class="hero-story"><p>My coding setup</p><h2>The tool<br>I build with.</h2><p>My ROG Strix G16.<br>For ideas, code, and everything in between.</p></div>
   </div>
-  <div class="hero-bottom"><span class="scroll-invitation">Scroll to explore every layer.</span><a href="#selected">Skip to selected work ↓</a></div>
+  <div class="hero-bottom"><span class="scroll-invitation">Scroll to explore my setup.</span><button class="replay-intro" type="button">Replay intro ↻</button><a href="#selected">Skip to selected work ↓</a></div>
   <div class="hero-progress" aria-hidden="true"><span></span></div>
 </section>
 <section class="work-gallery" id="selected" aria-labelledby="selected-heading">

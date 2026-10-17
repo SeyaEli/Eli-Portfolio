@@ -6,6 +6,7 @@ export async function verifyMotion(browser, base) {
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(base);
+    await expect(page.locator('.entry-intro')).toBeHidden({timeout:8500});
   await page.waitForFunction(() => document.documentElement.dataset.motionReady === 'true');
   await page.evaluate(() => document.fonts.ready);
   await page.evaluate(() => window.ScrollTrigger.refresh());
@@ -15,10 +16,10 @@ export async function verifyMotion(browser, base) {
   const seek = async top => {await page.evaluate(y=>window.scrollTo({top:y,behavior:'instant'}),top);await page.waitForTimeout(1100)};
   await page.screenshot({path:'test-results/screenshots/motion-home.png'});
   // Actual wheel input must drive the sequence, without a button or hover.
-  const beamBefore=await page.locator('.beam-one').evaluate(e=>getComputedStyle(e).transform);
+  const before=Number(await page.locator('.photo-art').getAttribute('data-explosion'));
   await page.mouse.wheel(0,800);
   await page.waitForTimeout(1100);
-  assert.notEqual(await page.locator('.beam-one').evaluate(e=>getComputedStyle(e).transform),beamBefore);
+  assert.ok(Number(await page.locator('.photo-art').getAttribute('data-explosion'))>before+.5,'Wheel input must reveal the actual exploded photograph');
   await seek(bounds['hero-story'].start + (bounds['hero-story'].end-bounds['hero-story'].start)*.9);
   assert.ok(Number(await page.locator('.hero-story').evaluate(e=>getComputedStyle(e).opacity))>.9);
   assert.ok(Math.abs((await page.locator('.hero').boundingBox()).y)<3,'Hero should remain pinned');

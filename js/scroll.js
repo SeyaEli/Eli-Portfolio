@@ -13,7 +13,7 @@
   const sceneMotion = {progress:0};
   const updateScene = () => {
     hero.dataset.sceneProgress = sceneMotion.progress.toFixed(4);
-    hero.classList.toggle('is-scene-dark',sceneMotion.progress>.48);
+    hero.classList.toggle('is-scene-dark',hero.classList.contains('scroll-stage') && sceneMotion.progress>.48);
     window.dispatchEvent(new CustomEvent('portfolio:hero-progress',{detail:sceneMotion.progress}));
   };
 
@@ -25,7 +25,7 @@
       defaults: {ease: 'none'},
       scrollTrigger: {
         id: 'hero-story', trigger: hero, start: 'top top',
-        end: () => `+=${innerHeight * 1.25}`, pin: true, scrub: .8,
+        end: () => `+=${innerHeight * 2}`, pin: true, scrub: .8,
         anticipatePin: 1, invalidateOnRefresh: true,
         onUpdate: self => { heroCopy.inert = self.progress > .45; }
       }
@@ -37,14 +37,6 @@
       .to('.hero-copy', {y: -70, opacity: 0, duration: .35}, 0)
       .to('.hero-top', {opacity: 0, duration: .25}, 0)
       .to('.hero-shade', {opacity: 1, duration: .65}, .15)
-      .to('.sculpture-stage', {rotationZ: 16, x: 65, scale: 1.16, duration: 1}, 0)
-      .to('.beam-one', {x: 24, y: -90, z: 110, rotationY: -12, duration: .75}, .1)
-      .to('.beam-two', {x: -45, z: 75, rotationY: 8, duration: .75}, .1)
-      .to('.beam-three', {x: 38, y: 90, z: 60, rotationY: -10, duration: .75}, .1)
-      .to('.spine', {opacity: 0, scaleY: .7, duration: .35}, .1)
-      .to('.orbit-one', {rotation: 65, scale: 1.2, duration: 1}, 0)
-      .to('.orbit-two', {rotation: -55, duration: 1}, 0)
-      .to('.art-caption, .rotate-art', {autoAlpha: 0, duration: .2}, 0)
       .to('.hero-story', {autoAlpha: 1, yPercent: -50, duration: .4}, .45)
       .to('.hero-progress span', {scaleX: 1, duration: 1}, 0);
 
@@ -165,7 +157,7 @@
   });
 
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    if(scrollY<100) gsap.from('.headline-line',{y:30,opacity:0,duration:.85,stagger:.11,ease:'power3.out'});
+    if(scrollY<100 && !document.documentElement.classList.contains('intro-active')) gsap.from('.headline-line',{y:30,opacity:0,duration:.85,stagger:.11,ease:'power3.out'});
     const intro = document.querySelector('.intro-section');
     gsap.fromTo(intro.querySelectorAll('h2 span'), {opacity: .22, y: 35}, {
       opacity: 1, y: 0, stagger: .25, ease: 'none',
@@ -194,8 +186,8 @@
   });
 
   media.add('(max-width: 900px) and (prefers-reduced-motion: no-preference), (max-height: 719px) and (prefers-reduced-motion: no-preference)', () => {
-    gsap.to('.sculpture-stage', {y: -35, rotationZ: 10, ease: 'none',
-      scrollTrigger: {trigger: '.hero-art', start: 'top 85%', end: 'bottom top', scrub: .5}});
+    gsap.fromTo(sceneMotion,{progress:0},{progress:1,ease:'none',onUpdate:updateScene,
+      scrollTrigger:{trigger:'.hero-art',start:'top 85%',end:'bottom top',scrub:.8}});
     gallery.querySelectorAll('.work-frame').forEach(frame => {
       gsap.fromTo(frame, {y: 20, rotationZ: 2, scale: .94}, {
         y: -12, rotationZ: -1, scale: 1, ease: 'none',

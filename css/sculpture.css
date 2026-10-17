@@ -42,3 +42,25 @@
 @media(max-width:700px){.hero-art.has-webgl{height:445px;margin-top:28px}.has-webgl .sculpture-viewport{inset:-30px -15px 100px}.has-webgl .sculpture-ui{gap:10px}.sculpture-ui p{max-width:300px}.sculpture-controls{gap:2px;padding:4px}.sculpture-controls button{font-size:14px;min-height:40px;padding:7px 8px}.sculpture-controls .reset-sculpture{width:34px}.finish-picker{gap:0}.finish-dot{width:10px;height:10px}.has-webgl .orbit-two{inset:20px 0 125px}.visual-caption{max-width:calc(100% - 84px)}}
 @media(max-width:370px){.hero-art.has-webgl{height:460px}.has-webgl .sculpture-viewport{bottom:130px}.sculpture-controls{max-width:280px}.finish-picker{width:100%;justify-content:center}}
 @media(prefers-reduced-motion:reduce){.frame-tilt{transform:none!important}.project-peek{transform:none!important}}
+
+/* Laptop viewport: leave room beneath the model for touch and keyboard controls. */
+.hero-art.has-webgl{height:650px}
+.scroll-stage .hero-art.has-webgl{height:min(650px,72vh)}
+.has-webgl .sculpture-viewport{inset:-30px -30px 220px}
+.has-webgl .sculpture-ui{gap:10px;left:-25px;right:-25px}
+.part-picker{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}
+.part-picker button{font:inherit;font-size:14px;min-height:36px;padding:6px 10px;border-radius:20px;border:1px solid var(--line);background:transparent;color:inherit}
+.part-picker button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.part-detail{max-width:410px;text-align:center;min-height:78px}
+.part-title{font-size:14px;font-weight:600;color:var(--ink)}
+.part-detail .part-description{margin:5px 0 0;font-size:14px;line-height:1.5}
+.hero.is-scene-dark .part-title{color:var(--surface)}
+.hero.is-scene-dark .part-picker button{border-color:#877499}
+.hero.is-scene-dark .part-picker button[aria-pressed=true]{background:var(--surface);color:var(--dark)}
+.finish-dot.eclipse{background:linear-gradient(140deg,#837095,#26222e)}
+.laptop-static{width:100%;height:100%;left:0;top:0;transform:none!important;scale:1!important;display:grid;place-items:center}
+.laptop-static>.beam-one{width:100%;max-width:500px;height:auto;background:none;box-shadow:none}
+.laptop-fallback{display:block;width:100%;height:auto}
+@media(max-width:900px){.hero-art.has-webgl{height:610px}.has-webgl .sculpture-ui{left:0;right:0}.has-webgl .sculpture-viewport{inset:-20px -15px 230px}}
+@media(max-width:700px){.hero-art.has-webgl{height:565px}.has-webgl .sculpture-viewport{inset:-15px -10px 235px}.part-detail{max-width:320px;min-height:85px}.sculpture-controls{max-width:100%;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto 32px;gap:2px}.part-picker{gap:3px}.part-picker button{padding:6px 8px}.has-webgl .sculpture-ui{gap:8px}.finish-picker{width:auto;justify-content:center}.sculpture-controls button{padding:7px 4px;gap:3px}.sculpture-controls .finish-dot{display:none}}
+@media(max-width:370px){.hero-art.has-webgl{height:600px}.has-webgl .sculpture-viewport{bottom:245px}.sculpture-controls{max-width:280px}.finish-picker{width:100%}}
