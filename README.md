@@ -12,6 +12,8 @@ The laptop experience adapts the ten component masks and assembly offsets from t
 
 The home and services pages share an interactive service explorer. Its accessible tabs switch between responsive-layout, request-routing, API round-trip, and deployment illustrations. Each includes deliverables and a related case study. These demos run entirely in the browser; they do not submit requests or deploy software. All service descriptions remain visible without JavaScript.
 
+Projects, Services, and About also use `js/page-experiences.js` and `css/page-experiences.css`. On desktop screens at least 1000px wide and 820px tall, Projects becomes a pinned showcase with category filters, next/previous controls, and keyboard-accessible case-study links. Services advances through its four working demos on scroll; direct tab selection synchronizes the scroll position. About unfolds through three navigable chapters with a moving portrait, followed by experience and skill-group navigation. Narrow screens keep the normal reading order with subtle image movement. Reduced motion and no JavaScript expose all content without pins. Shared markup lives in `page-content.mjs`; `node verify.mjs --dist --pages-only` checks these flows, reverse scrolling, live preference changes, and mobile layouts.
+
 ## Preview
 
 From `C:\xampp\htdocs\JohnEliseoPortfolio`:

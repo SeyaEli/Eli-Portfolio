@@ -87,7 +87,7 @@ export async function verifyMotion(browser, base) {
   assert.ok(['none','matrix(1, 0, 0, 1, 0, 0)'].includes(await page.locator('.gallery-track').evaluate(e=>getComputedStyle(e).transform)));
   await page.screenshot({path:'test-results/screenshots/motion-reduced.png',fullPage:true});
   await page.emulateMedia({reducedMotion:'no-preference'});
-  await expect(page.locator('.pin-spacer')).toHaveCount(2);
+  await expect(page.locator('.pin-spacer')).toHaveCount(3);
   await page.setViewportSize({width:1024,height:768});
   await page.waitForTimeout(400);
   await page.evaluate(()=>window.ScrollTrigger.refresh());

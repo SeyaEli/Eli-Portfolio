@@ -10,15 +10,18 @@ document.querySelectorAll('.service-explorer').forEach(explorer=>{
   const orientation=()=>tablist.setAttribute('aria-orientation',mobile.matches?'horizontal':'vertical');
   tablist.setAttribute('role','tablist');orientation();mobile.addEventListener('change',orientation);
   panels.forEach((panel,i)=>{panel.setAttribute('role','tabpanel');panel.setAttribute('tabindex','0');tabs[i].setAttribute('role','tab');tabs[i].setAttribute('aria-controls',panel.id)});
-  const activate=(index,focus=false)=>{
+  const activate=(index,focus=false,source='user')=>{
+    if(index<0 || index>=tabs.length)return;
+    const restorePanelFocus=current>=0 && panels[current].contains(document.activeElement);
     if(index===current){if(focus)tabs[index].focus();return}
     if(current>=0){pending.get(panels[current])?.();panels[current].getAnimations({subtree:true}).forEach(animation=>animation.cancel())}
     current=index;
     tabs.forEach((tab,i)=>{tab.setAttribute('aria-selected',String(i===index));tab.tabIndex=i===index?0:-1;panels[i].hidden=i!==index});
-    if(focus)tabs[index].focus({preventScroll:true});
+    if(focus || (source==='scroll' && restorePanelFocus))tabs[index].focus({preventScroll:true});
     animate(panels[index],[{opacity:.45,transform:'translateY(10px)'},{opacity:1,transform:'translateY(0)'}],{duration:350,easing:'cubic-bezier(.2,.7,.2,1)'});
     // Refresh the home page's scroll measurements when the service content changes height.
-    requestAnimationFrame(()=>window.ScrollTrigger?.refresh());
+    if(!explorer.closest('.is-service-pinned'))requestAnimationFrame(()=>window.ScrollTrigger?.refresh());
+    explorer.dispatchEvent(new CustomEvent('portfolio:service-change',{detail:{index,source}}));
   };
   tabs.forEach((tab,index)=>{
     tab.addEventListener('click',event=>{event.preventDefault();activate(index)});
@@ -35,7 +38,8 @@ document.querySelectorAll('.service-explorer').forEach(explorer=>{
   explorer.classList.add('is-enhanced');
   reduced.addEventListener('change',()=>{if(reduced.matches)explorer.getAnimations({subtree:true}).forEach(animation=>animation.cancel())});
   const initial=panels.findIndex(panel=>`#${panel.id}`===location.hash);
-  activate(initial>=0?initial:0);
+  activate(initial>=0?initial:0,false,'initial');
+  explorer.addEventListener('portfolio:select-service',event=>activate(Number(event.detail.index),false,'scroll'));
   window.addEventListener('hashchange',()=>{const index=panels.findIndex(panel=>`#${panel.id}`===location.hash);if(index>=0)activate(index)});
 
   panels.forEach(panel=>{

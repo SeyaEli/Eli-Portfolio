@@ -1,3 +1,4 @@
+import {serviceRail} from './page-content.mjs';
 const icons={
   web:'<rect x="3" y="4" width="22" height="20" rx="3"/><path d="M3 10h22M8 7h.01M12 7h.01M12 14l-3 3 3 3m4-6 3 3-3 3"/>',
   systems:'<rect x="4" y="3" width="20" height="22" rx="3"/><path d="M9 9h10M9 14h10M9 19h5"/>',
@@ -21,7 +22,7 @@ const scenes={
 };
 const actions={web:'Try mobile view',systems:'Route a request',api:'Send sample request',deployment:'Start a release'};
 const statuses={web:'A layout that adapts.',systems:'Ready to receive a request.',api:'Illustrated request; no data is sent.',deployment:'A release, one step at a time.'};
-export const serviceShowcase=()=>`<div class="service-explorer">
+export const serviceShowcase=()=>`${serviceRail}<div class="service-explorer">
   <div class="service-choices"><p class="service-invitation">Choose a service. Explore how it works.</p><div class="service-tabs" aria-label="Explore services">${services.map(s=>`<a href="#service-${s.id}" class="service-tab" id="service-tab-${s.id}" data-service="${s.id}"><span class="service-icon">${icon(s.id)}</span><span class="service-tab-copy"><strong>${s.name}</strong><span>${s.hint}</span></span><span class="service-tab-arrow" aria-hidden="true">↗</span></a>`).join('')}</div></div>
   <div class="service-panels">${services.map(s=>`<section class="service-panel" id="service-${s.id}" data-service-panel="${s.id}" aria-labelledby="service-tab-${s.id}"><div class="service-stage"><div class="service-scene-label"><span>Interactive illustration</span><span aria-hidden="true">${icon(s.id)}</span></div>${scenes[s.id]}<div class="demo-controls"><button type="button" class="demo-action" data-demo="${s.id}">${actions[s.id]}<span aria-hidden="true">↗</span></button><span class="demo-status" role="status">${statuses[s.id]}</span></div></div><div class="service-description"><p class="service-stack">${s.stack}</p><h3>${s.title}</h3><p>${s.description}</p><ul class="service-deliverables">${s.deliverables.map(d=>`<li>${d}</li>`).join('')}</ul><a href="project-${s.project}.html" class="service-related"><span>See it in practice</span><strong>${s.projectName} <span aria-hidden="true">↗</span></strong></a></div></section>`).join('')}</div>
-</div><a class="service-start text-link" href="contact.html">Have a challenge in mind? Let’s talk <span aria-hidden="true">↗</span></a>`;
+</div><a class="service-start text-link" href="contact.html">Have a challenge in mind? Let’s talk <span aria-hidden="true">↗</span></a><span id="service-exit" class="service-exit" tabindex="-1"></span>`;
