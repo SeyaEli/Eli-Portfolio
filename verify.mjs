@@ -33,7 +33,7 @@ try{
  await expect(page.locator('.hero-art')).toHaveAttribute('data-sculpture-state',/ready|fallback/);
  const urls=new Set(['index.html','projects.html','services.html','about.html','contact.html']);
  await page.goto(base+'projects.html');for(const href of await page.locator('.project').evaluateAll(a=>a.map(x=>x.getAttribute('href'))))urls.add(href);
- for(const [name,count] of [['Web3',2],['Government systems',2],['Web applications',4],['All projects',8]]){await page.getByRole('button',{name,exact:false}).click();assert.equal(await page.locator('.project:not([hidden])').count(),count)}
+ for(const [name,count] of [['Web3',2],['Government systems',2],['Web applications',5],['All projects',9]]){await page.getByRole('button',{name,exact:false}).click();assert.equal(await page.locator('.project:not([hidden])').count(),count)}
  for(const url of urls){await page.goto(base+url);assert.equal(await page.locator('h1').count(),1);assert.equal(await page.locator('body').evaluate(el=>el.scrollWidth<=innerWidth),true,url+' desktop overflow');await page.locator('img').evaluateAll(imgs=>imgs.forEach(i=>i.loading='eager'));await expect.poll(()=>page.locator('img').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)),{message:url+' images'}).toBe(true);for(const link of await page.locator('a[href]').evaluateAll(a=>a.map(x=>x.getAttribute('href')).filter(x=>!x.includes(':')&&!x.startsWith('#')))){const response=await page.request.get(base+link);assert.equal(response.status(),200,link)}
  await page.setViewportSize({width:390,height:844});await expect.poll(()=>page.locator('body').evaluate(el=>el.scrollWidth<=innerWidth),{message:url+' mobile overflow'}).toBe(true);await page.setViewportSize({width:1440,height:1000})}
  await page.goto(base+'services.html');await page.getByRole('tab',{name:'Information systems'}).click();await expect(page.locator('#service-systems')).toBeVisible();
@@ -42,7 +42,7 @@ try{
  await page.goto(base);await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'Open navigation'}).click();assert.equal(await page.locator('#navigation').isVisible(),true);await page.keyboard.press('Escape');assert.equal(await page.locator('#navigation').isVisible(),false);await page.screenshot({path:'test-results/screenshots/mobile-preview.png',fullPage:true});
  const tiny=await page.evaluate(()=>{const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);const a=[];while(w.nextNode()){const e=w.currentNode.parentElement;if(w.currentNode.textContent.trim()&&e.getClientRects().length&&parseFloat(getComputedStyle(e).fontSize)<14)a.push(e.textContent)}return a});assert.deepEqual(tiny,[]);assert.deepEqual(errors,[]);
  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('html').evaluate(e=>getComputedStyle(e).scrollBehavior),'auto');
- console.log('PASS: 13 pages, local links and images, filters, service disclosure, email validation and copy, sculpture control, mobile menu/Escape, desktop/mobile overflow, text size, reduced motion, and runtime errors.');
+ console.log('PASS: 14 pages, local links and images, filters, service disclosure, email validation and copy, sculpture control, mobile menu/Escape, desktop/mobile overflow, text size, reduced motion, and runtime errors.');
  await verifyPageExperiences(browser, base);
  await verifyMotion(browser, base);
  await verifySculpture(browser, base);

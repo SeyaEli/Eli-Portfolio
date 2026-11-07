@@ -81,3 +81,5 @@
 @media(max-width:900px){.about-journey-layout{grid-template-columns:1fr;gap:30px}.journey-portrait{max-width:500px}.journey-portrait img{height:450px}.about-chapter{padding:28px 0}.about-journey-heading{align-items:start;flex-direction:column}.about-chapter-nav{gap:8px}.about-journey-bottom{flex-wrap:wrap}.project-case-label{margin-top:16px}}
 @media(max-width:500px){.about-journey{padding:32px var(--space)}.journey-portrait img{height:360px}.about-chapter h2{font-size:40px}.about-chapter>p:not(.chapter-kicker){font-size:16px}.about-chapter-nav a{padding:9px 12px}.project-case-label{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.skill-row{transition:none}}
+
+.project-image.contractcompass img,.case-cover.contractcompass img{aspect-ratio:1.6;object-fit:cover;object-position:top}

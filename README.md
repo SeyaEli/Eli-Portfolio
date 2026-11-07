@@ -1,6 +1,6 @@
 # John Eliseo Portfolio
 
-A standalone static portfolio with five main pages and eight project case studies, located at `C:\xampp\htdocs\JohnEliseoPortfolio`.
+A standalone static portfolio with five main pages and nine project case studies, located at `C:\xampp\htdocs\JohnEliseoPortfolio`.
 
 ## Scroll experience
 
@@ -44,7 +44,7 @@ Biography, education, contact details, skills, project capabilities, screenshots
 
 For Vercel, import the repository root. `vercel.json` selects the static-site preset, runs `npm run build`, and publishes `dist/`. Run `npm run verify:dist` to test that exact output before deploying.
 
-`npm run verify` runs a temporary local server and Playwright against installed Microsoft Edge. It checks all 13 pages, local links, images, desktop/mobile overflow, filters, service navigation, mobile navigation and Escape, email validation/copy, the laptop photograph controls, text sizing, and JavaScript errors. It also runs `verify-motion.mjs`: wheel-driven animation, forward/reverse scrolling, gallery controls, keyboard case-study access, skip links, resizing during a pin, laptop/mobile layouts, live reduced-motion changes, and a no-JavaScript fallback. Screenshots go to `test-results/screenshots/`. The script closes its server/browser afterward.
+`npm run verify` runs a temporary local server and Playwright against installed Microsoft Edge. It checks all 14 pages, local links, images, desktop/mobile overflow, filters, service navigation, mobile navigation and Escape, email validation/copy, the laptop photograph controls, text sizing, and JavaScript errors. It also runs `verify-motion.mjs`: wheel-driven animation, forward/reverse scrolling, gallery controls, keyboard case-study access, skip links, resizing during a pin, laptop/mobile layouts, live reduced-motion changes, and a no-JavaScript fallback. Screenshots go to `test-results/screenshots/`. The script closes its server/browser afterward.
 
 The motion checks also verify project separation, uncropped screenshot proportions, and frame/caption clearance. `verify-sculpture.mjs` checks the original photograph sources, component movement, transparent backgrounds, scroll reassembly, six layer groups and hotspots, toggle/reset, keyboard slider, mobile layouts, reduced motion, and no-JavaScript access.
 

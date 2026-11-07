@@ -14,7 +14,7 @@ export async function verifyPageExperiences(browser,base){
   await page.getByRole('button',{name:'Next project',exact:true}).click();
   await expect(page.locator('.project-current')).toHaveText('02');
   await expect(page.locator('.project[aria-hidden=false] h3')).toHaveText('eCitizen');
-  for(const [progress,index] of [[1,'08'],[.43,'04'],[0,'01']]){
+  for(const [progress,index] of [[1,'09'],[.375,'04'],[0,'01']]){
     await seek('projects-cinema',progress);
     await expect(page.locator('.project-current')).toHaveText(index);
     await expect(page.locator('.project[aria-hidden=false]')).toHaveCount(1);
@@ -64,7 +64,7 @@ export async function verifyPageExperiences(browser,base){
     await page.goto(base+route+'.html');
     await page.emulateMedia({reducedMotion:'reduce'});
     await expect(page.locator('.pin-spacer')).toHaveCount(0);
-    if(route==='projects')await expect(page.locator('.project:visible')).toHaveCount(8);
+    if(route==='projects')await expect(page.locator('.project:visible')).toHaveCount(9);
     if(route==='about')await expect(page.locator('.about-chapter:visible')).toHaveCount(3);
     await page.emulateMedia({reducedMotion:'no-preference'});
     await page.setViewportSize({width:390,height:844});
@@ -80,7 +80,7 @@ export async function verifyPageExperiences(browser,base){
   for(const route of ['projects','services','about']){
     await fallback.goto(base+route+'.html');
     await expect(fallback.locator('.pin-spacer')).toHaveCount(0);
-    if(route==='projects')await expect(fallback.locator('.project:visible')).toHaveCount(8);
+    if(route==='projects')await expect(fallback.locator('.project:visible')).toHaveCount(9);
     if(route==='services')await expect(fallback.locator('.service-panel:visible')).toHaveCount(4);
     if(route==='about')await expect(fallback.locator('.about-chapter:visible')).toHaveCount(3);
   }
