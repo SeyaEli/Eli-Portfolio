@@ -8,7 +8,7 @@
   gsap.registerPlugin(ScrollTrigger);
   ScrollTrigger.config({ignoreMobileResize: true});
   const media = gsap.matchMedia();
-  const desktop = '(min-width: 901px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)';
+  const desktop = '(min-width: 1101px) and (min-height: 900px) and (prefers-reduced-motion: no-preference)';
   let galleryAnimation;
   const sceneMotion = {progress:0};
   const updateScene = () => {
@@ -185,7 +185,7 @@
     return ()=>cleanup.forEach(fn=>fn());
   });
 
-  media.add('(max-width: 900px) and (prefers-reduced-motion: no-preference), (max-height: 719px) and (prefers-reduced-motion: no-preference)', () => {
+  media.add('(max-width: 1100px) and (prefers-reduced-motion: no-preference), (max-height: 899px) and (prefers-reduced-motion: no-preference)', () => {
     gsap.fromTo(sceneMotion,{progress:0},{progress:1,ease:'none',onUpdate:updateScene,
       scrollTrigger:{trigger:'.hero-art',start:'top 85%',end:'bottom top',scrub:.8}});
     gallery.querySelectorAll('.work-frame').forEach(frame => {

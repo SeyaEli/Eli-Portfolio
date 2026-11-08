@@ -1,8 +1,11 @@
 const menu = document.querySelector('.menu');
 const nav = document.querySelector('#navigation');
-function closeMenu(){ nav.classList.remove('open'); menu.setAttribute('aria-expanded','false'); menu.textContent='Menu +'; }
-menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'Close −':'Menu +';nav.classList.toggle('open',open)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus()}});
+function closeMenu(){ nav?.classList.remove('open'); menu?.setAttribute('aria-expanded','false'); menu?.setAttribute('aria-label','Open navigation'); if(menu)menu.textContent='Menu +'; }
+menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');menu.textContent=open?'Close −':'Menu +';nav?.classList.toggle('open',open)});
+nav?.addEventListener('click',event=>{if(event.target.closest('a'))closeMenu()});
+document.addEventListener('pointerdown',event=>{if(nav?.classList.contains('open')&&!event.target.closest('.header'))closeMenu()});
+document.addEventListener('focusin',event=>{if(nav?.classList.contains('open')&&!event.target.closest('.header'))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav?.classList.contains('open')){closeMenu();menu.focus()}});
 window.matchMedia('(min-width:701px)').addEventListener('change',e=>{if(e.matches)closeMenu()});
 document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let count=0;document.querySelectorAll('.project').forEach(card=>{card.hidden=button.dataset.filter!=='All projects'&&button.dataset.filter!==card.dataset.category;if(!card.hidden)count++});document.querySelector('#filter-status').textContent=`Showing ${count} projects`;}));
 const clock=document.querySelector('.local-time');

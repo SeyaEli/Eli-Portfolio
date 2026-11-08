@@ -9,6 +9,7 @@ import {verifySculpture} from './verify-sculpture.mjs';
 import {verifyServices} from './verify-services.mjs';
 import {verifyIntro} from './verify-intro.mjs';
 import {verifyPageExperiences} from './verify-page-experiences.mjs';
+import {verifyResponsive} from './verify-responsive.mjs';
 const projectRoot=resolve(fileURLToPath(new URL('.',import.meta.url)));
 const root=process.argv.includes('--dist')?resolve(projectRoot,'dist'):projectRoot;
 process.chdir(projectRoot);
@@ -44,6 +45,7 @@ try{
  await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('html').evaluate(e=>getComputedStyle(e).scrollBehavior),'auto');
  console.log('PASS: 14 pages, local links and images, filters, service disclosure, email validation and copy, sculpture control, mobile menu/Escape, desktop/mobile overflow, text size, reduced motion, and runtime errors.');
  await verifyPageExperiences(browser, base);
+ await verifyResponsive(browser, base);
  await verifyMotion(browser, base);
  await verifySculpture(browser, base);
  await verifyServices(browser, base);

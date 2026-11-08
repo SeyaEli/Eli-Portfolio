@@ -91,12 +91,13 @@ export async function verifyMotion(browser, base) {
   await page.setViewportSize({width:1024,height:768});
   await page.waitForTimeout(400);
   await page.evaluate(()=>window.ScrollTrigger.refresh());
-  await seek(await page.evaluate(()=>{const s=window.ScrollTrigger.getById('project-gallery');return s.start+(s.end-s.start)/3}));
-  const info=await page.locator('.work-info').nth(1).boundingBox();
-  const controls=await page.locator('.gallery-controls').boundingBox();
-  assert.ok(info.y+info.height<=controls.y,'Laptop project text must fit above controls');
+  await expect(page.locator('.pin-spacer')).toHaveCount(0);
+  await page.locator('.work-info').nth(1).scrollIntoViewIfNeeded();
+  await expect(page.locator('.work-link').nth(1)).toBeInViewport();
+  assert.equal(await page.locator('body').evaluate(e=>e.scrollWidth<=innerWidth),true,'Short laptop layout must stay within the viewport');
   await page.screenshot({path:'test-results/screenshots/motion-laptop.png'});
-  await checkGalleryLayout();
+  // Horizontal panel separation applies only while the gallery is pinned.
+  await expect(page.locator('.work-panel')).toHaveCount(4);
   await page.setViewportSize({width:1876,height:950});
   await page.waitForTimeout(400);
   await page.evaluate(()=>window.ScrollTrigger.refresh());

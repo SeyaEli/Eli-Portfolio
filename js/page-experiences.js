@@ -3,7 +3,7 @@
   if(!gsap || !ScrollTrigger)return;
   gsap.registerPlugin(ScrollTrigger);
   const media=gsap.matchMedia();
-  const desktop='(min-width:1000px) and (min-height:820px) and (prefers-reduced-motion:no-preference)';
+  const desktop='(min-width:1101px) and (min-height:900px) and (prefers-reduced-motion:no-preference)';
   const page=document.body.dataset.page;
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 
@@ -132,7 +132,7 @@
   }
 
   // Narrow screens keep ordinary reading order; scroll still moves the imagery.
-  media.add('(max-width:999px) and (prefers-reduced-motion:no-preference), (max-height:819px) and (prefers-reduced-motion:no-preference)',()=>{
+  media.add('(max-width:1100px) and (prefers-reduced-motion:no-preference), (max-height:899px) and (prefers-reduced-motion:no-preference)',()=>{
     document.querySelectorAll('.projects-cinema .project-image img,.journey-portrait img').forEach(image=>{
       gsap.fromTo(image,{y:18},{y:-18,ease:'none',scrollTrigger:{trigger:image.parentElement,start:'top bottom',end:'bottom top',scrub:.8}});
     });
