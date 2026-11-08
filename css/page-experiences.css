@@ -48,6 +48,7 @@
 .about-chapter-nav a[aria-current=true]{background:var(--surface);border-color:var(--surface);color:var(--dark)}
 .about-journey-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.15fr);gap:9vw;align-items:center}
 .journey-portrait{margin:0;position:relative;min-width:0}
+.journey-portrait-frame{overflow:hidden;border-radius:6px;isolation:isolate}
 .journey-portrait img{display:block;width:100%;height:clamp(340px,43vw,580px);object-fit:cover;object-position:50% 25%;filter:grayscale(1);border-radius:6px}
 .journey-portrait figcaption{font-size:14px;color:#d1c9de;margin-top:16px}
 .about-chapter-count{display:none}

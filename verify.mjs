@@ -10,6 +10,7 @@ import {verifyServices} from './verify-services.mjs';
 import {verifyIntro} from './verify-intro.mjs';
 import {verifyPageExperiences} from './verify-page-experiences.mjs';
 import {verifyResponsive} from './verify-responsive.mjs';
+import {verifyAboutFixes} from './verify-about-fixes.mjs';
 const projectRoot=resolve(fileURLToPath(new URL('.',import.meta.url)));
 const root=process.argv.includes('--dist')?resolve(projectRoot,'dist'):projectRoot;
 process.chdir(projectRoot);
@@ -18,7 +19,9 @@ const server=createServer(async(req,res)=>{try{let path=resolve(root,'.'+decodeU
 await new Promise(r=>server.listen(5176,'127.0.0.1',r));
 const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
- if(process.argv.includes('--pages-only')){
+ if(process.argv.includes('--about-only')){
+   await verifyAboutFixes(browser,'http://127.0.0.1:5176/');
+ }else if(process.argv.includes('--pages-only')){
    await verifyPageExperiences(browser,'http://127.0.0.1:5176/');
  }else if(process.argv.includes('--laptop-only')){
    await verifyIntro(browser,'http://127.0.0.1:5176/');
@@ -46,6 +49,7 @@ try{
  console.log('PASS: 14 pages, local links and images, filters, service disclosure, email validation and copy, sculpture control, mobile menu/Escape, desktop/mobile overflow, text size, reduced motion, and runtime errors.');
  await verifyPageExperiences(browser, base);
  await verifyResponsive(browser, base);
+ await verifyAboutFixes(browser, base);
  await verifyMotion(browser, base);
  await verifySculpture(browser, base);
  await verifyServices(browser, base);
